@@ -1,0 +1,26 @@
+%% -*- Doc -*-
+%% vim: set syntax=asciidoc:
+@author Joseph Wayne Norton <norton@alum.mit.edu>
+@copyright 2012 by Joseph Wayne Norton
+@title Setup Package
+@doc
+
+This repository is a prototype recipe for building an Erlang package
+and installation using rebar, setup, and make.  Gproc is the
+Erlang application choosen for this recipe.
+
+== Quick Start Recipe
+
+To download, build, and boot the gproc package and installation in one
+shot, please follow this recipe:
+
+------
+$ mkdir working-directory-name
+$ cd working-directory-name
+$ git clone https://github.com/norton/setup-pkg.git setup-pkg
+$ cd setup-pkg
+$ ./rebar get-deps
+$ make clean
+$ make compile
+$ make boot
+------
