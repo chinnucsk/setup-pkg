@@ -1,0 +1,11 @@
+%%% -*- mode: erlang -*-
+
+{application, gprocpkg,
+ [
+  {description, "GPROCPKG"},
+  {vsn, git},
+  {registered, []},
+  {applications, [kernel, stdlib, sasl]},
+  {modules, [setup_pkg]},
+  {env, []}
+ ]}.
