@@ -1,6 +1,6 @@
 
 PKG=gprocpkg
-VSN=$(shell git describe --always --tags)
+VSN=$(shell git describe --always --long --tags)
 RELPKG=$(PKG)-$(VSN)
 
 OTPREL=$(shell erl -noshell -eval 'io:format(erlang:system_info(otp_release)), halt().')
@@ -54,3 +54,15 @@ clean:
 	@echo "cleaning: $(RELPKG) ..."
 	-rm -rf rel/{$(RELPKG),erl_crash.dump,lib,releases}
 	./rebar clean
+
+# rm -rf rebar rebar.git
+# . ~/.kerl/installations/r13b04/activate
+# make -f rebar.mk rebar
+# git commit -m "Update rebar (`./rebar -V | cut -d ' ' -f 6`)" rebar
+rebar: rebar.git
+	(cd $(CURDIR)/rebar.git && make clean && make && cp -f rebar ..)
+	./rebar -V
+
+rebar.git:
+	rm -rf $(CURDIR)/rebar
+	git clone git://github.com/rebar/rebar.git rebar.git
