@@ -10,6 +10,7 @@ OTPREL=$(shell erl -noshell -eval 'io:format(erlang:system_info(otp_release)), h
 	package \
 	boot \
 	restart \
+	test \
 	clean
 
 all: compile
@@ -49,6 +50,22 @@ restart:
 		-sasl errlog_type all \
 		-boot releases/$(VSN)/start \
 		-config releases/$(VSN)/sys)
+
+test: clean compile package
+	@echo "testing: $(RELPKG) ..."
+	rel/$(RELPKG) -i -c rel/$(PKG).config -d rel
+	(cd rel; erl \
+		-smp +A 5 \
+		-sasl errlog_type error \
+		-boot releases/$(VSN)/install \
+		-config releases/$(VSN)/install \
+		-setup stop_when_done true)
+	(cd rel; erl \
+		-smp +A 5 \
+		-sasl errlog_type all \
+		-boot releases/$(VSN)/start \
+		-config releases/$(VSN)/sys \
+        -s erlang halt)
 
 clean:
 	@echo "cleaning: $(RELPKG) ..."
